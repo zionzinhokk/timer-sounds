@@ -168,7 +168,7 @@ function App() {
 
   return (
     <div className="app">
-      <h1 className="app-title">Yako Gostoso</h1>
+      <h1 className="app-title">Jalambi Palmo leda silva</h1>
 
       <div className="circle-container">
         <svg width="320" height="320">
