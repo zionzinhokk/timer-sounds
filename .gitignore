@@ -1,0 +1,24 @@
+# Node
+node_modules/
+
+# Env
+.env
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build
+dist/
+build/
+
+# Uploads do backend
+backend/uploads/
+
+# Vite
+frontend/dist/
+
+# Sistema
+.DS_Store
+Thumbs.db
