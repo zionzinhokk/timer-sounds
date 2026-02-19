@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "./App.css";
 
+const API_URL = "https://timer-sounds.onrender.com";
+
 function App() {
   const [totalSeconds, setTotalSeconds] = useState(60);
   const [initialSeconds, setInitialSeconds] = useState(60);
@@ -22,9 +24,7 @@ function App() {
 
   useEffect(() => {
     const seen = localStorage.getItem("tutorial_seen");
-    if (!seen) {
-      setShowTutorial(true);
-    }
+    if (!seen) setShowTutorial(true);
   }, []);
 
   const closeTutorial = () => {
@@ -99,7 +99,7 @@ function App() {
       sounds[Math.floor(Math.random() * sounds.length)];
 
     const audio = new Audio(
-      `http://localhost:3001/uploads/${random}`
+      `${API_URL}/uploads/${random}`
     );
 
     audio.play().catch(() => {});
@@ -115,9 +115,7 @@ function App() {
 
   const refreshSounds = async () => {
     try {
-      const res = await axios.get(
-        "http://localhost:3001/sounds"
-      );
+      const res = await axios.get(`${API_URL}/sounds`);
       setSounds(res.data);
       localStorage.setItem("sounds", JSON.stringify(res.data));
     } catch (err) {
@@ -136,7 +134,7 @@ function App() {
     }
 
     try {
-      await axios.post("http://localhost:3001/upload", formData);
+      await axios.post(`${API_URL}/upload`, formData);
 
       setTimeout(async () => {
         await refreshSounds();
@@ -150,7 +148,7 @@ function App() {
   const deleteSound = async (name) => {
     try {
       await axios.delete(
-        `http://localhost:3001/delete/${encodeURIComponent(name)}`
+        `${API_URL}/delete/${encodeURIComponent(name)}`
       );
 
       const updated = sounds.filter((s) => s !== name);
@@ -172,7 +170,6 @@ function App() {
     <div className="app">
       <h1 className="app-title">Timer Sounds</h1>
 
-      {/* TIMER */}
       <div className="circle-container">
         <svg width="320" height="320">
           <circle
@@ -225,24 +222,16 @@ function App() {
         )}
       </div>
 
-      {/* CONTROLS */}
       <div className="controls">
-        <button
-          className="btn main"
-          onClick={toggleTimer}
-        >
+        <button className="btn main" onClick={toggleTimer}>
           {isRunning ? "❚❚" : "▶"}
         </button>
 
-        <button
-          className="btn secondary"
-          onClick={reset}
-        >
+        <button className="btn secondary" onClick={reset}>
           ↺
         </button>
       </div>
 
-      {/* CONTAINER DE SONS */}
       <div className="sound-container">
         <button
           className="upload-btn"
@@ -283,7 +272,6 @@ function App() {
         </div>
       </div>
 
-      {/* FOOTER */}
       <footer
         className={`footer ${
           sounds.length > 0 ? "hidden" : ""
@@ -292,7 +280,6 @@ function App() {
         © {new Date().getFullYear()} Timer Sounds — Todos os direitos reservados.
       </footer>
 
-      {/* TUTORIAL */}
       {showTutorial && (
         <div className="tutorial-overlay">
           <div className="tutorial-card">
