@@ -168,7 +168,7 @@ function App() {
 
   return (
     <div className="app">
-      <h1 className="app-title">Timer Sounds</h1>
+      <h1 className="app-title">Gozei na sua boca</h1>
 
       <div className="circle-container">
         <svg width="320" height="320">
